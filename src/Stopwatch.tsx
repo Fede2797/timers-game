@@ -15,6 +15,7 @@ export const Stopwatch = ({timerTime, residualTime, setResidualTime, gameState, 
 
   const [time, setTime] = useState(timerTime);
   const [running, setRunning] = useState(false);
+  const [animationKey, setAnimationKey] = useState(0);
 
   useEffect(() => {
     let interval: any;
@@ -39,6 +40,7 @@ export const Stopwatch = ({timerTime, residualTime, setResidualTime, gameState, 
     if ( gameState === GAME_RUNS ) {
       setTime(timerTime)
       setRunning(true)
+      resetAnimation()
     }
 
   }, [gameState])
@@ -50,19 +52,25 @@ export const Stopwatch = ({timerTime, residualTime, setResidualTime, gameState, 
     setResidualTime( residualTime + time )
     setTimersRunning( timersRunning - 1 )
   }
-  
+
+  const resetAnimation = () => {
+    setAnimationKey(animationKey + 1);
+  }
 
   return (
-    <div className="w-[200px] h-[200px] m-auto flex flex-col justify-center items-center border-4 border-white rounded-full text-[32px] text-white font-semibold">
-      <div className="">
+    <div 
+      className="relative w-[200px] h-[200px] m-auto flex flex-col justify-center items-center border-4 border-white rounded-full text-[32px] text-white font-semibold "
+      onClick={() => stopTimer()}
+    >
+      {/* White ball */}
+      <div key={animationKey} className={`absolute right-[-4px] top-[-4px] w-[200px] h-[200px] after:absolute after:w-6 after:h-6 after:bg-white after:rounded-full after:right-[-9px] after:top-[88px] ${ running ? ' animate-timer' : 'animate-timer pause'}`}></div>
+      <div className="min-w-[125px]">
         <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span>
         <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
         <span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
       </div>
       <div className="">
-        {/* <button onClick={() => setRunning(true)}>Start</button> */}
-        <button onClick={() => stopTimer()}>STOP</button>
-        {/* <button onClick={() => setTime(5000)}>Reset</button>        */}
+        <span>STOP</span>
       </div>
     </div>
   );
