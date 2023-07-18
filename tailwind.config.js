@@ -11,7 +11,7 @@ export default {
         }
       },
       animation: {
-        timer: 'timer 5s linear both'
+        timer: 'timer 5s linear both',
       }
     },
   },
