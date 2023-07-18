@@ -1,30 +1,28 @@
 import { Stopwatch } from "./Stopwatch"
 import { useState, useEffect } from 'react';
-import { GAME_WIN, GAME_LOSE, GAME_IDLE, GAME_RUNS } from "./constants";
-import { EASY, NORMAL, HARD, PRO } from "./constants";
-import { EASY_WIN_COND, NORMAL_WIN_COND, HARD_WIN_COND, PRO_WIN_COND } from "./constants";
+import { GameState, WinCondition, Difficulty } from "./types";
 
 
 function App() {
 
-  const [gameState, setGameState] = useState(GAME_IDLE);
+  const [gameState, setGameState] = useState(GameState.Idle);
   const [residualTime, setResidualTime] = useState(0);
-  const [difficulty, setDifficulty] = useState(EASY);
+  const [difficulty, setDifficulty] = useState(Difficulty.Easy);
   const [timersRunning, setTimersRunning] = useState(1);
 
   const startGame = () => {
     
     switch (difficulty) {
-      case EASY:
+      case Difficulty.Easy:
         setTimersRunning(1);
         break;
-      case NORMAL:
+      case Difficulty.Normal:
         setTimersRunning(2);
         break;
-      case HARD:
+      case Difficulty.Hard:
         setTimersRunning(3);
         break;
-      case PRO:
+      case Difficulty.Pro:
         setTimersRunning(4);
         break;
       default:
@@ -32,29 +30,29 @@ function App() {
     }
 
     setResidualTime(0)
-    setGameState(GAME_RUNS)
+    setGameState(GameState.Running)
   }
 
   const defineWinner = () => {
-    (residualTime <= EASY_WIN_COND) 
-      ? setGameState(GAME_WIN)
-      : setGameState(GAME_LOSE)
+    (residualTime <= WinCondition.Easy) 
+      ? setGameState(GameState.Win)
+      : setGameState(GameState.Lose)
   }
 
   useEffect(() => {
     if (timersRunning !== 0) return;
     
     switch (difficulty) {
-      case EASY:
+      case Difficulty.Easy:
         defineWinner();
         break;
-      case NORMAL:
+      case Difficulty.Normal:
         defineWinner();
         break;
-      case HARD:
+      case Difficulty.Hard:
         defineWinner();
         break;
-      case PRO:
+      case Difficulty.Pro:
         defineWinner();
         break;
       default:

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { GAME_WIN, GAME_LOSE, GAME_IDLE, GAME_RUNS } from "./constants";
+import { GameState } from "./types";
 
 interface stopWatchProps {
   timerTime: number;
   residualTime: number;
   setResidualTime: (t: number) => void;
-  gameState: string;
-  setGameState: (s: string) => void;
+  gameState: GameState;
+  setGameState: (s: GameState) => void;
   timersRunning: number;
   setTimersRunning: (n: number) => void;
 }
@@ -32,12 +32,12 @@ export const Stopwatch = ({timerTime, residualTime, setResidualTime, gameState, 
   useEffect(() => {
     if ( time > 0 ) return;
     setRunning(false);
-    setGameState(GAME_LOSE)
+    setGameState(GameState.Lose)
     setTime(0)
   }, [time])
 
   useEffect(() => {
-    if ( gameState === GAME_RUNS ) {
+    if ( gameState === GameState.Running ) {
       setTime(timerTime)
       setRunning(true)
       resetAnimation()
@@ -47,7 +47,7 @@ export const Stopwatch = ({timerTime, residualTime, setResidualTime, gameState, 
   
 
   const stopTimer = () => {
-    if (time === 0 || gameState !== GAME_RUNS || !running) return;
+    if (time === 0 || gameState !== GameState.Running || !running) return;
     setRunning(false)
     setResidualTime( residualTime + time )
     setTimersRunning( timersRunning - 1 )
