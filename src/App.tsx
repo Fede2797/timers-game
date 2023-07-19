@@ -2,6 +2,7 @@ import { Stopwatch } from "./Stopwatch"
 import { useState, useEffect, useRef } from 'react';
 import { GameState, WinCondition, Difficulty, ClocksTimers } from './types';
 
+const audio = new Audio("/ticking-sound.mp3");
 
 function App() {
 
@@ -33,6 +34,8 @@ function App() {
         break;
     }
 
+    audio.play()
+
     setGameState(GameState.Running)
   }
 
@@ -40,6 +43,8 @@ function App() {
     (residualTime <= winCondition.current) 
       ? setGameState(GameState.Win)
       : setGameState(GameState.Lose)
+    
+    audio.pause();
   }
 
   useEffect(() => {
