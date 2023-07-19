@@ -93,12 +93,12 @@ export const Stopwatch = ({timerTime, residualTime, setResidualTime, gameState, 
 
   return (
     <div 
-      className={`relative w-[130px] h-[130px]  m-auto flex flex-col justify-center items-center border-4 border-white rounded-full text-[20px] text-white font-semibold ${ colSpanCondition.current ? 'col-span-2' : '' } md:w-[200px] md:h-[200px] md:text-[32px]`}
+      className={`relative w-[130px] h-[130px] m-auto flex flex-col justify-center items-center bg-white border-4 border-black rounded-full text-[20px] text-black font-semibold ${ colSpanCondition.current ? 'col-span-2' : '' } md:w-[200px] md:h-[200px] md:text-[32px] cursor-pointer`}
       onClick={() => stopTimer()}
     >
       {/* White rolling ball */}
-      <div key={animationKey} className={`absolute right-[-4px] top-[-4px] w-[130px] h-[130px] aspect-[1/1] after:right-[-9px] after:top-[53px] md:w-[200px] md:h-[200px] after:absolute after:w-6 after:h-6 after:bg-white after:rounded-full md:after:right-[-9px] md:after:top-[88px] ${ running ? timerAnimation.current : timerAnimation.current + ' pause'}`}></div>
-      <div className="min-w-[78px] md:min-w-[125px]">
+      <div key={animationKey} className={`absolute right-[-4px] top-[-4px] w-[130px] h-[130px] aspect-[1/1] after:right-[-9px] after:top-[53px] md:w-[200px] md:h-[200px] after:absolute after:w-6 after:h-6 after:bg-white after:border-4 after:border-black after:rounded-full md:after:right-[-9px] md:after:top-[88px] ${ running ? timerAnimation.current : timerAnimation.current + ' pause'}`}></div>
+      <div className="min-w-[90px] md:min-w-[145px]">
         <span>{("0" + Math.floor((time / 60000) % 60)).slice(-2)}:</span>
         <span>{("0" + Math.floor((time / 1000) % 60)).slice(-2)}:</span>
         <span>{("0" + ((time / 10) % 100)).slice(-2)}</span>
